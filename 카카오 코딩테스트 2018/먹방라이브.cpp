@@ -1,60 +1,52 @@
 #include <string>
 #include <vector>
-#include<queue>
+#include<algorithm>
 
 #include<iostream>
 
 using namespace std;
 
+//음식 번호 오름차순 
+bool comp(pair<int,int> a, pair<int,int> b) {
+	return a.second < b.second;
+}
+
 int solution(vector<int> food_times, long long k) {
-	int answer = 0;
 
-	queue<pair<int,int>> q;
-
-	//최소값 찾기
-	vector<int> ::iterator it;
-	int min = -1;
-	for (it = food_times.begin(); it != food_times.end(); it++) {
-		if (min > *it) { min = *it; }
-	}
-	int standard = 0;
-
-	if (min > 0) {
-		standard = min;
-		k = k - standard * food_times.size();
-	}
-
-
-	//초기화 
-	for (unsigned int i=0; i< food_times.size();i++)
-	{
-		if (food_times[i] == standard) continue;
-		q.push(make_pair(i+1, food_times[i]));	//key:음식번호, value:소요시간
-	}
-
-	int dish_num=0, dish_time=0;
-	while(k--){
-		if (q.empty()) {
-			break;
-		}
-		
-		dish_num = q.front().first;
-		dish_time = q.front().second - 1;
-		q.pop();
-
-		if (dish_time > 0)
-			q.push(make_pair(dish_num, dish_time));
+	//초기화
+	vector <pair<int, int>> v;
+	for (int i = 0; i < food_times.size(); i++) {
+		if(food_times[i]>0)
+			v.push_back(make_pair(food_times[i],i+1));
 	}
 	
-	//결과
-	if (q.empty())	{
-		answer = -1;
+	//음식 양(소요시간)순 오름차순 정렬
+	sort(v.begin(), v.end());
+
+	int dish_num = v.size();	//남은 음식 수
+	int prev_time = 0;
+	for (vector <pair<int, int>> ::iterator it = v.begin(); it != v.end(); ++it, --dish_num) {
+		
+		//주의. int*int는 int범위 넘을 수 있으므로 longlong으로 선언
+		long long time = (long long)(it->first - prev_time) * dish_num;
+
+		if (time == 0) continue;	//it->second - prev_time ==0 또는 dish_num==0 인 경우
+
+		if (time <= k) {
+			k -= time;
+			prev_time = it->first;
+		}
+		else {
+			k %= dish_num;
+			sort(it, v.end(), comp);	 //음식 번호 순 정렬
+			
+			return it->second + 1;
+		}
 	}
-	else {
-		answer = q.front().first;
-	}
-	cout << answer;
-	return answer;
+
+
+	return -1;
+
 }
 
 int main() {
