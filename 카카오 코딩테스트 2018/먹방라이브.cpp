@@ -40,13 +40,11 @@ int solution(vector<int> food_times, long long k) {
 			k %= dish_num;
 			sort(it, v.end(), comp);	 //음식 번호 순 정렬
 			
-			return it->second + 1;
+			return (it+k)->second;
 		}
 	}
 
-
 	return -1;
-
 }
 
 int main() {
