@@ -3,7 +3,7 @@
 
 #include <string>
 #include <vector>
-#include<map>
+#include<unordered_map>
 
 using namespace std;
 
@@ -11,8 +11,8 @@ string solution(vector<string> participant, vector<string> completion) {
 	string answer = "";
 	vector<string>::iterator it;
 	
-	map<string, int> m;
-	map<string, int>::iterator itm;
+	unordered_map<string, int> m;	//Hash Table을 사용해 키의 순서를 유지하지 않으므로 map보다 빠름
+	unordered_map<string, int>::iterator itm;
 
 	for (it = participant.begin(); it != participant.end(); it++) {
 		m[*it]++;
