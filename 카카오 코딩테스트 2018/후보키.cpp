@@ -43,7 +43,7 @@ bool unique(vector<vector<string>> relation, int tupleNum, int attributeNum, int
 				if ((subset & 1 << a) == 0) // 1,100,100,1000 과 비교->포함하는 속성 알아냄 (ex.{학번,이름 0011} 일 경우 {학번 0001},{이름 0010} 각각 검사)
 					continue;
 
-				//** if ((subset & 1 << a) == 1) 조건으로 아래 if문 실행하면 안된다. subset{0011학번,이름} & a{0010 이름} -> 0010 이 나오므로 **
+				//** if ((subset & 1 << a) == 1) 조건으로 아래 if문 실행하면 안된다. subset{0011학번,이름} & a{0010 이름} -> 0010 ,즉 1이 아닌 값이 나오므로  **
 
 				if (relation[t][a] != relation[t2][a]) //2개의 튜플 간 속성 비교 시 속성 하나라도 다르면, 나머지 속성 추가 비교 안해도 이미 유일함 (학번 비교-> 다르면, 이름 비교 필요x)
 				{	
