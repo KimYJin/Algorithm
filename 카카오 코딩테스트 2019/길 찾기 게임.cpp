@@ -16,7 +16,7 @@ struct Node {
 	Node *right;
 };
 
-bool comp(Node& a, Node& b) {
+bool comp(Node a, Node b) {
 
 	if (a.y != b.y)
 		return (a.y > b.y);
@@ -43,6 +43,7 @@ void addNode(Node *parent, Node* child) {
 	}
 }
 
+//함수에 vector 전달하고 함수에서 vector 사용할 경우, Call by Reference 
 void preorder(vector<int>& ans, Node* node) {
 	if (node == NULL)return;
 
