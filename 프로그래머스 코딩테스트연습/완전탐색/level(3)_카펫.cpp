@@ -12,16 +12,11 @@ vector<int> solution(int brown, int red) {
 		if (red % r_sero != 0 || r_garo < r_sero)
 			continue;
 
-		for (b_sero = 1; b_sero <= brown; b_sero++) {
-			b_garo = (brown+red) / b_sero;
-			if ((brown + red) % b_sero != 0 || b_garo < b_sero)
-				continue;
-
-			if (b_garo == r_garo + 2 && b_sero == r_sero + 2) {
-				answer.push_back(b_garo);
-				answer.push_back(b_sero);
-				return answer;
-			}
+		if ((r_garo + 2)*(r_sero + 2) == brown + red)
+		{
+			answer.push_back(r_garo + 2);
+			answer.push_back(r_sero + 2);
+			break;
 		}
 
 	}
