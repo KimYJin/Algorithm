@@ -1,7 +1,6 @@
 #include <string>
 #include <vector>
 #include<iostream>
-#include<map>
 #include<queue>
 
 using namespace std;
@@ -10,45 +9,40 @@ int solution(int bridge_length, int weight, vector<int> truck_weights) {
 	
 	int answer = 0;
 
-	map <int, int>::iterator iter;
-	map <int, int> m;			//index, move
-	queue <pair<int,int>> q;	//index, weight
+	queue<int> q;
+	int size = truck_weights.size();
 	int sum = 0;
 
-	for (int i=0;i < truck_weights.size(); ++i) {
-		q.push(make_pair(i,truck_weights[i]));
-	}
+	for (int i = 0; i < size; ++i) {
+		
+		int truck_weight = truck_weights[i];
 
+		while (1) {
 
-	for (int time = 1; ; ++time) {
-
-		//트럭 이동
-		for (iter = m.begin(); iter != m.end(); ) {
-			if (iter->second < bridge_length) {
-				++m[iter->first];
-				++iter;
+			//다리를 빠져나가는 트럭
+			 if (q.size() == bridge_length) {
+				sum -= q.front();
+				q.pop();
 			}
 			else {
-				sum -= truck_weights[iter->first];
-				iter = m.erase(iter);
+				//다음 트럭이 다리에 추가될 수 있을 때
+				if (truck_weight + sum <= weight) {
+					q.push(truck_weight);
+					sum += truck_weight;
+					++answer;
+					break;
+				}
+				//그렇지 않을 때-> queue에 0 삽입
+				else {
+					q.push(0);
+					++answer;
+				}
+
 			}
-		}		
-
-		//다리위로 트럭 진입
-		if (q.front().second + sum <= weight) {
-			int idx = q.front().first;
-			sum += q.front().second;
-			q.pop();
-			m.insert(make_pair(q.front().first, 1));
 		}
+	}//마지막 트럭 진입하면 종료됨
 
-		if (m.empty()) {
-			answer = time;
-			break;
-		}	
-	}	
-
-	return answer;
+	return answer+bridge_length;	//마지막 트럭이 나오는 시간 더해줌
 }
 
 int main() {
