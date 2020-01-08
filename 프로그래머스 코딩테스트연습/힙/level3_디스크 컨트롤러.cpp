@@ -23,16 +23,18 @@ int solution(vector<vector<int>> jobs) {
 
 	priority_queue<vector<int>, vector<vector<int>>, cmp> pq;
 
-	while (index < jobs.size()) {
-		while (currentTime >= jobs[index][0]) { //실행할 수 있는 작업들 
-			pq.push(jobs[index]);	//우선순위 큐에 추가
+	while (index < jobs.size() || !pq.empty()) {
+
+		//현재 시간 기준 실행할 수 있는 작업들은 우선순위 큐에 추가
+		while (index < jobs.size() && currentTime >= jobs[index][0]) {
+			pq.push(jobs[index]);
 			++index;
 		}
 
 		//실행가능한 작업이 있다면 소요시간이 최소인 작업을 실행
 		if (!pq.empty()) {	
 			answer += (currentTime - pq.top()[0]) + pq.top()[1];	//작업의 대기시간,소요시간 더하기
-			currentTime += pq.top()[1];		//작업의 소요시간 더하기
+			currentTime += pq.top()[1];		//작업 실행을 마친 시간 (소요시간 더하기)
 			pq.pop();
 		}
 		//큐가 비어있다면 다음 작업 시간으로 넘김
@@ -41,7 +43,7 @@ int solution(vector<vector<int>> jobs) {
 		}
 	}
 	
-	return answer;
+	return answer/jobs.size();
 }
 
 int main(void) {
