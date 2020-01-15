@@ -7,6 +7,11 @@ using namespace std;
 
 bool check[50] = { false };	//꼭 추가해서 불필요한 시간 줄이기
 
+/*
+begin을 target으로 변환하는 최소 단계를 return 
+1. 한 번에 한 개의 알파벳만 바꿀 수 있습니다.
+2. words에 있는 단어로만 변환할 수 있습니다.
+*/
 int solution(string begin, string target, vector<string> words) {
 
 	int answer = 0;
