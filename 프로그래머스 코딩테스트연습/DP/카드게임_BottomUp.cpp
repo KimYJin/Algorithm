@@ -22,22 +22,16 @@ int solution(vector<int> left, vector<int> right) {
 	for (int i = 1; i <= size; i++) {
 		for (int j = 1; j <= size; j++) {
 
-			cout << endl<<"왼쪽 카드 " << i << " 오른쪽 카드 " << j << " 일 때" << endl;
-
 			if (left[i - 1] > right[j - 1])	// (1) 오른쪽 카드 버리는 경우
 			{
-				dp[i][j] = dp[i][j - 1] + right[j - 1];
-				cout << left[i - 1] << " > " << right[j - 1] << " 이므로 " << right[j - 1] << " 더하면 " << dp[i][j] << endl;
+				dp[i][j] = dp[i][j - 1] + right[j - 1];	//점수 추가
 			}
-			else	// (2)양쪽 카드 모두, (3) 왼쪽 카드만 버리는 경우
+			else	// (2)왼쪽 카드만, (3)양쪽 카드 모두 버리는 경우
 			{
-				dp[i][j] = max(dp[i - 1][j - 1], dp[i - 1][j]);
-				cout << left[i - 1] << " < " << right[j - 1] << " 이므로 " << dp[i][j] << endl;
-
+				dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - 1]);
 			}
 		}
 	}
-
 	return dp[size][size];	//얻을 수 있는 최종 점수의 최대값
 }
 

@@ -36,7 +36,7 @@ int solution(int N, int number) {
 					if (times - j > j)
 						continue;
 
-					s[times].insert(op1 + op2);
+					s[times].insert(op1 + op2);	//insert: 만약 이미 존재하면 무시됨
 					s[times].insert(op1 - op2);
 					s[times].insert(op1 * op2);
 

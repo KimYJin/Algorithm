@@ -26,7 +26,7 @@ int solution(vector<int> money) {
 		dp[i] = max(dp[i - 1], dp[i - 2] + money[i]); // 방문 X vs 방문 O
 	}
 
-	//2) 0번째 집에 반문하지 않은 경우
+	//2) 0번째 집에 방문하지 않은 경우
 	dp2[0] = 0;
 	dp2[1] = money[1];	//dp[1]은 money[1]집 훔쳐야 최대이므로
 
