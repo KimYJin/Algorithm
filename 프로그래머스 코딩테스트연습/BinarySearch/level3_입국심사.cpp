@@ -14,20 +14,21 @@ using namespace std;
 
 long long solution(int n, vector<int> times) {
 
-	int size = times.size();
+	sort(times.begin(), times.end());
 
 	long long max = (long long)times.back() * n;	//가장 느린 심사관이 모든 사람들을 한명씩 심사
 	long long min = 1;		//1분 걸리는 심시관이 1명 심사
 	long long mid = 0;		//총 심사 시간
 
+	int size = times.size();
 	long long answer = max;
 	long long people_sum = 0;
 
 	while (min <= max) {
 
 		people_sum = 0;
-		mid = (min + max) / 2;	
-		
+		mid = (min + max) / 2;
+
 		for (int i = 0; i < size; i++) {
 			people_sum += mid / times[i];	//각 심사위원이 mid 시간동안 심사한 사람
 		}
@@ -36,7 +37,7 @@ long long solution(int n, vector<int> times) {
 			min = mid + 1;
 		}
 		else {
-			if (answer > mid) {	
+			if (answer > mid) {
 				answer = mid;	//심사 시간의 최솟값 찾기
 			}
 			max = mid - 1;
